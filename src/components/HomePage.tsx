@@ -1,26 +1,38 @@
 import React, { useState, FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { setName, setRoomCode } from '../redux/userSlice';
 
 const HomePage: FC = () => {
   const [username, setUsername] = useState<string>("");
   const [gameCode, setGameCode] = useState<string>("");
 
+  const dispatch = useDispatch()
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = event.target.value;
+    setUsername(newName);
+    dispatch(setName(newName)); 
+  }
+
+  const handleGameCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newCode = event.target.value;
+    setGameCode(newCode);
+    dispatch(setRoomCode(newCode));
+  }
   
   return (
     <>
-      <h1>hompage</h1>
+      <h1>homepage</h1>
       <input 
         type="text" 
         value={username} 
-        onChange={(e) => {
-          setUsername(e.target.value)
-          console.log(username)
-        }}
-        placeholder="Ash kethcin"
+        onChange={handleUsernameChange}
+        placeholder="Ash ketchup"
       />
       <input 
         type="text" 
         value={gameCode} 
-        onChange={(e) => setGameCode(e.target.value)}
+        onChange={handleGameCodeChange}
         placeholder="public game code"
       />
       <button
