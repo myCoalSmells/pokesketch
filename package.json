@@ -2,6 +2,7 @@
   "name": "pokesketch",
   "version": "0.1.0",
   "private": true,
+   "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -15,6 +16,9 @@
     "@types/node": "^16.18.37",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.1",
+    "nodemon": "^2.0.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
@@ -28,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev" : "npx ts-node-dev src/backend/app.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -36,6 +41,7 @@
       "react-app/jest"
     ]
   },
+  
   "browserslist": {
     "production": [
       ">0.2%",
