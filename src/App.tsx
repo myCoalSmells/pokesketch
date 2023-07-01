@@ -6,11 +6,10 @@ import Lobby from './components/Lobby';
 import Game from './components/Game';
 import { io } from "socket.io-client";
 
-console.log("hi");
 
 const App: FC = () => {
-  const socket = io("http://localhost:3001");
-  console.log(socket);
+  const socket = io("http://localhost:3000");
+  console.log("socket: "+socket);
   return (
     <Router>
       <NavBar />

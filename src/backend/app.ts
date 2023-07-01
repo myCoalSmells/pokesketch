@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 import http from "http";
 import {mongoURI, port} from "./config";
 import {Server} from "socket.io";
+import cors from "cors"
 
 const app = express();
+app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://localhost:3000",
+        origin: "http://localhost:3001",  // Change this line
         methods: ["GET", "POST"]
     }
 }); 
@@ -22,10 +24,10 @@ io.on("connection", (socket: any) => {
 })
 
 mongoose.connect(mongoURI).then(()=>{
-    console.log("Conneced to MongoDB");
+    console.log("Connected to MongoDB");
 })
 .catch((error) => {
     console.error("Error connecting to Mongo: "+ error);
 })
 
-app.listen(3001, ()=>console.log("Listening on port "+ port));
+server.listen(port, ()=>console.log("Listening on port "+ port));
