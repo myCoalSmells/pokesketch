@@ -4,8 +4,13 @@ import NavBar from './components/Navbar';
 import HomePage from './components/HomePage';
 import Lobby from './components/Lobby';
 import Game from './components/Game';
+import { io } from "socket.io-client";
+
+console.log("hi");
 
 const App: FC = () => {
+  const socket = io("http://localhost:3001");
+  console.log(socket);
   return (
     <Router>
       <NavBar />

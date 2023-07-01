@@ -1,16 +1,25 @@
 import express from "express";
 import mongoose from "mongoose";
-import {mongoURI, port} from "./config"
+import http from "http";
+import {mongoURI, port} from "./config";
+import {Server} from "socket.io";
 
-/**
- * Express server application class
- */
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "https://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+}); 
 
-class Server{
-    public app = express();
-}
+io.on("connection", (socket: any) => {
+    console.log(socket.id);
 
-const server = new Server();
+    socket.on("disconnect", () => {
+        console.log("user disconnected: "+ socket.id);
+    })
+})
 
 mongoose.connect(mongoURI).then(()=>{
     console.log("Conneced to MongoDB");
@@ -19,4 +28,4 @@ mongoose.connect(mongoURI).then(()=>{
     console.error("Error connecting to Mongo: "+ error);
 })
 
-server.app.listen(port, ()=>console.log("Listening on port "+ port));
+app.listen(3001, ()=>console.log("Listening on port "+ port));
