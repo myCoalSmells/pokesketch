@@ -24,6 +24,6 @@
         "linebreak-style": "off",
         "implicit-arrow-linebreak": "off",
         "no-param-reassign": "off",
-        "prefer-default-export" : "off"
+        "import/prefer-default-export" : "off"
     }
 }
