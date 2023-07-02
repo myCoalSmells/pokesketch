@@ -9,15 +9,17 @@ import Game from './components/Game';
 const socket = io('http://localhost:3000');
 console.log(`socket: ${socket}`);
 
-export const App: FC = () => (
-  <Router>
-    <NavBar />
-    <h1>{socket.id}</h1>
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/lobby" element={<Lobby />} />
-      <Route path="/game" element={<Game />} />
-    </Routes>
-  </Router>
-);
-export { socket };
+export const App: FC = () => {
+  return (
+    <Router>
+      <NavBar />
+      <h1>{socket.id}</h1>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/lobby/:gameCode" element={<Lobby />} />
+        <Route path="/game" element={<Game />} />
+      </Routes>
+    </Router>
+  );
+}
+export {socket}

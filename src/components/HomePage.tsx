@@ -26,7 +26,7 @@ const HomePage: FC = () => {
   const joinRoom = () => {
     if (socket.connected) {
       socket.emit("join_room", { username, gameCode });
-      navigate('/lobby');
+      navigate(`/lobby/${gameCode}`);
     } else {
       console.error('Socket is not connected');
     }
@@ -55,7 +55,7 @@ const HomePage: FC = () => {
         Create Game
       </button>
       <button
-        onClick={joinRoom} //fill in later
+        onClick={joinRoom} 
         disabled={username === "" || gameCode === ""}
       >
         Join game 
