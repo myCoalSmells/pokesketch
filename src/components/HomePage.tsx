@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setName, setRoomCode } from '../redux/userSlice';
-import { socket } from '../App';
+import { socket } from '../backend/socket';
 
 function HomePage() {
   const [username, setUsername] = useState<string>('');
