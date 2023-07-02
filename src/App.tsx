@@ -16,7 +16,7 @@ export const App: FC = () => {
       <h1>{socket.id}</h1>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/lobby" element={<Lobby />} />
+        <Route path="/lobby/:gameCode" element={<Lobby />} />
         <Route path="/game" element={<Game />} />
       </Routes>
     </Router>
