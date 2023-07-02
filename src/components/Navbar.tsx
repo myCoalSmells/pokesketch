@@ -1,13 +1,12 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
 
-const Navbar: FC = () => {
-  const [mute, setMute] = useState<boolean>(() => {
+function Navbar() {
+  const [mute, setMute] = useState<boolean>(() =>
     // Default to unmuted if localStorage item doesn't exist yet
-    return JSON.parse(localStorage.getItem('mute') || 'false');
-  });
+    JSON.parse(localStorage.getItem('mute') || 'false'));
 
   useEffect(() => {
     // Whenever mute state changes, update localStorage item
@@ -15,18 +14,17 @@ const Navbar: FC = () => {
   }, [mute]);
 
   const toggleMute = () => {
-    setMute(prevMute => !prevMute);
+    setMute((prevMute) => !prevMute);
   };
 
   return (
     <nav>
       <Link to="/">POKESKETCH</Link>
-      {mute 
-        ? <VolumeMuteIcon onClick={toggleMute}/> 
-        : <VolumeUpIcon onClick={toggleMute}/> 
-      }
+      {mute
+        ? <VolumeMuteIcon onClick={toggleMute} />
+        : <VolumeUpIcon onClick={toggleMute} />}
     </nav>
   );
-};
+}
 
 export default Navbar;

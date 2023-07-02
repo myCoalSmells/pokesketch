@@ -21,10 +21,10 @@ export const userSlice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
-    setRoomCode: (state, action: PayloadAction<string>) => { 
+    setRoomCode: (state, action: PayloadAction<string>) => {
       state.roomCode = action.payload;
     },
-    //define more actions here
+    // define more actions here
   },
 });
 
