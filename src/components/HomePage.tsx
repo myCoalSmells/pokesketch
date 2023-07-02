@@ -2,12 +2,14 @@ import React, { useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { setName, setRoomCode } from '../redux/userSlice';
 import  {socket }from "../App"
+import { useNavigate } from "react-router-dom"
 
 const HomePage: FC = () => {
   const [username, setUsername] = useState<string>("");
   const [gameCode, setGameCode] = useState<string>("");
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
@@ -22,12 +24,17 @@ const HomePage: FC = () => {
   }
   
   const joinRoom = () => {
-    socket.emit("join_room", gameCode)
+    if (socket.connected) {
+      socket.emit("join_room", { username, gameCode });
+      navigate('/lobby');
+    } else {
+      console.error('Socket is not connected');
+    }
   }
+  
 
   return (
     <>
-      <button onClick={joinRoom}>poo</button>
       <h1>homepage</h1>
       <input 
         type="text" 
@@ -48,7 +55,7 @@ const HomePage: FC = () => {
         Create Game
       </button>
       <button
-        onClick={() => {}} //fill in later
+        onClick={joinRoom} //fill in later
         disabled={username === "" || gameCode === ""}
       >
         Join game 
