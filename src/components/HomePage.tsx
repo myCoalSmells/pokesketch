@@ -1,6 +1,7 @@
 import React, { useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { setName, setRoomCode } from '../redux/userSlice';
+import  {socket }from "../App"
 
 const HomePage: FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -20,8 +21,13 @@ const HomePage: FC = () => {
     dispatch(setRoomCode(newCode));
   }
   
+  const joinRoom = () => {
+    socket.emit("join_room", gameCode)
+  }
+
   return (
     <>
+      <button onClick={joinRoom}>poo</button>
       <h1>homepage</h1>
       <input 
         type="text" 

@@ -1,22 +1,38 @@
 import express from "express";
 import mongoose from "mongoose";
-import {mongoURI, port} from "./config"
+import http from "http";
+import {mongoURI, port} from "./config";
+import {Server} from "socket.io";
+import cors from "cors"
 
-/**
- * Express server application class
- */
+const app = express();
+app.use(cors());
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3001",  // Change this line
+        methods: ["GET", "POST"]
+    }
+}); 
 
-class Server{
-    public app = express();
-}
+io.on("connection", (socket: any) => {
+    console.log(`${socket.id} connected`);
 
-const server = new Server();
+    socket.on("join_room", (data: any) => {
+        socket.join(data)
+        console.log(`${socket.id} joined room ${data}`)
+        console.log(data)
+    })
+    socket.on("disconnect", () => {
+        console.log("user disconnected: "+ socket.id);
+    })
+})
 
 mongoose.connect(mongoURI).then(()=>{
-    console.log("Conneced to MongoDB");
+    console.log("Connected to MongoDB");
 })
 .catch((error) => {
     console.error("Error connecting to Mongo: "+ error);
 })
 
-server.app.listen(port, ()=>console.log("Listening on port "+ port));
+server.listen(port, ()=>console.log("Listening on port "+ port));
