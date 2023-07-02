@@ -1,68 +1,69 @@
-import React, { useState, FC } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setName, setRoomCode } from '../redux/userSlice';
-import  {socket }from "../App"
-import { useNavigate } from "react-router-dom"
+import { socket } from '../App';
 
-const HomePage: FC = () => {
-  const [username, setUsername] = useState<string>("");
-  const [gameCode, setGameCode] = useState<string>("");
+function HomePage() {
+  const [username, setUsername] = useState<string>('');
+  const [gameCode, setGameCode] = useState<string>('');
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
     setUsername(newName);
-    dispatch(setName(newName)); 
-  }
+    dispatch(setName(newName));
+  };
 
   const handleGameCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = event.target.value;
     setGameCode(newCode);
     dispatch(setRoomCode(newCode));
-  }
-  
+  };
+
   const joinRoom = () => {
     if (socket.connected) {
-      socket.emit("join_room", { username, gameCode });
+      socket.emit('join_room', { username, gameCode });
       navigate(`/lobby/${gameCode}`);
     } else {
       console.error('Socket is not connected');
     }
-  }
-  
+  };
 
   return (
     <>
       <h1>homepage</h1>
-      <input 
-        type="text" 
-        value={username} 
+      <input
+        type="text"
+        value={username}
         onChange={handleUsernameChange}
         placeholder="Ash ketchup"
       />
-      <input 
-        type="text" 
-        value={gameCode} 
+      <input
+        type="text"
+        value={gameCode}
         onChange={handleGameCodeChange}
         placeholder="public game code"
       />
       <button
-        onClick={() => {}} //fill in later
-        disabled={username === "" || gameCode !== ""}
+        type="submit"
+        onClick={() => {}} // fill in later
+        disabled={username === '' || gameCode !== ''}
       >
         Create Game
       </button>
       <button
-        onClick={joinRoom} 
-        disabled={username === "" || gameCode === ""}
+        type="submit"
+        onClick={joinRoom}
+        disabled={username === '' || gameCode === ''}
       >
-        Join game 
-      </button> 
+        Join game
+      </button>
     </>
 
   );
-};
+}
 
 export default HomePage;

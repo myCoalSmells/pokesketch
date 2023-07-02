@@ -15,31 +15,31 @@ const io = new Server(server, {
   },
 });
 
-let players: { [key: string]: {username: string, room: string} } = {}; //all players
+const players: { [key: string]: { username: string, room: string } } = {}; // all players
 
-io.on("connection", (socket: any) => {
-    console.log(`${socket.id} connected`);
+io.on('connection', (socket: any) => {
+  console.log(`${socket.id} connected`);
 
-    socket.on('join_room', ({ username, gameCode }: any) => {
-        console.log('User', username, 'joined room', gameCode);
-        console.log(socket.id)
-        socket.join(gameCode);
-        players[socket.id] = { username, room: gameCode }; //add new player to list
+  socket.on('join_room', ({ username, gameCode }: any) => {
+    console.log('User', username, 'joined room', gameCode);
+    console.log(socket.id);
+    socket.join(gameCode);
+    players[socket.id] = { username, room: gameCode }; // add new player to list
 
-        const playersInRoom = Object.values(players).filter(player => player.room === gameCode); 
-        io.to(gameCode).emit('players_in_room', playersInRoom); // send users in room to all clients in room
-    });
+    const playersInRoom = Object.values(players).filter((player) => player.room === gameCode);
+    io.to(gameCode).emit('players_in_room', playersInRoom); // send users in room to all clients in room
+  });
 
-    socket.on("disconnect", () => {
-        console.log("user disconnected: "+ socket.id);
-        const { room } = players[socket.id] || {};
-        if (room) {
-            delete players[socket.id]; // remove player if disconnect
-            const playersInRoom = Object.values(players).filter(user => user.room === room); 
-            io.to(room).emit('players_in_room', playersInRoom); 
-        }
-    })
-})
+  socket.on('disconnect', () => {
+    console.log(`user disconnected: ${socket.id}`);
+    const { room } = players[socket.id] || {};
+    if (room) {
+      delete players[socket.id]; // remove player if disconnect
+      const playersInRoom = Object.values(players).filter((user) => user.room === room);
+      io.to(room).emit('players_in_room', playersInRoom);
+    }
+  });
+});
 
 mongoose.connect(mongoURI).then(() => {
   console.log('Connected to MongoDB');

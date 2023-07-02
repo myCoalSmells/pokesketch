@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { } from 'react';
 
-const Game: FC = () => {
+function Game() {
   return <div>Game</div>;
-};
+}
 
 export default Game;
