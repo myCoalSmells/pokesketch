@@ -44,7 +44,7 @@ function Lobby() {
           <li key={index}>{player.username}</li>
         ))}
       </ul>
-      <button onClick={startGame} type="submit">Start Game</button>
+      <button onClick={startGame} type="submit" disabled={players.length < 2}>Start Game</button>
     </div>
   );
 }
