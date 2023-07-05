@@ -24,6 +24,7 @@ function HomePage() {
   };
 
   const joinRoom = () => {
+    console.log('scoekt');
     if (socket.connected) {
       socket.emit('join_room', { username, gameCode });
       navigate(`/lobby/${gameCode}`);
