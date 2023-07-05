@@ -40,7 +40,7 @@ io.on('connection', (socket: any) => {
     io.to(gameCode).emit('players_in_room', players); // send users in room to all clients in room
   });
 
-  socket.on('start_game', (gameCode: string) => {
+  socket.on('start_game', (gameCode: string) => { // receive start game
     console.log(`game started in room ${gameCode}`);
     io.to(gameCode).emit('game_started', gameCode);
   });
