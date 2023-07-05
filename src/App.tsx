@@ -11,7 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/lobby/:gameCode" element={<Lobby />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/game/:gameCode" element={<Game />} />
       </Routes>
     </Router>
   );
