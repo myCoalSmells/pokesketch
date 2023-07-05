@@ -10,7 +10,7 @@ function Canvas({ width, height }: { width: number, height: number }) {
 
   const handleClearCanvas = () => {
     console.log('hadnling');
-    //TODO CLEAR CANVAS
+    // TODO
   };
 
   function drawLine(
@@ -47,8 +47,8 @@ function Canvas({ width, height }: { width: number, height: number }) {
     <div className="w-screen h-screen bg-white flex justify-center items-center">
       <div className="flex flex-col gap-10 pr-10">
         <ChromePicker color={color} onChange={(newColor: ColorResult) => setColor(newColor.hex)} />
-        <button type="button" className="p-2 rounded-md border border-black" onClick={() => handleClearCanvas>
-          clear canvas
+        <button type="button" className="p-2 rounded-md border border-black" onClick={() => handleClearCanvas}>
+          test canvas
         </button>
       </div>
       <canvas
