@@ -40,6 +40,11 @@ io.on('connection', (socket: any) => {
     io.to(gameCode).emit('players_in_room', players); // send users in room to all clients in room
   });
 
+  socket.on('start_game', (gameCode: string) => {
+    console.log(`game started in room ${gameCode}`);
+    io.to(gameCode).emit('game_started', gameCode);
+  });
+
   socket.on('disconnect', () => {
     console.log(`user disconnected: ${socket.id}`);
     const gameCode = socketIdToGameCode.get(socket.id);
