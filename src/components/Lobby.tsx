@@ -49,6 +49,8 @@ function Lobby() {
     initialValues: settings,
     onSubmit: (values: Settings) => {
       setSettings(values);
+      console.log(gameCode);
+      console.log(values);
       socket.emit('game_settings', { room: gameCode, settings: values }); // tell server game settings
     },
   });
