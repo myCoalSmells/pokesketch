@@ -60,7 +60,6 @@ function useOnDraw(onDraw: Function) {
   }, [onDraw]);
 
   function setCanvasRef(ref) {
-    if (!ref) return;
     canvasRef.current = ref;
   }
 
