@@ -3,14 +3,14 @@ import { ChromePicker, ColorResult } from 'react-color';
 import useOnDraw, { Point } from './Hooks';
 
 function Canvas({ width, height }: { width: number, height: number }) {
-  const [color, setColor] = useState<string>('#fefefe');
+  const [color, setColor] = useState<string>('#5a4444');
   const canvasStyle = {
     border: '5px solid black',
   };
 
-  const handleChangeColor = () => {
+  const handleClearCanvas = () => {
     console.log('hadnling');
-    setColor('#FF0000');
+    // TODO
   };
 
   function drawLine(
@@ -46,9 +46,9 @@ function Canvas({ width, height }: { width: number, height: number }) {
   return (
     <div className="w-screen h-screen bg-white flex justify-center items-center">
       <div className="flex flex-col gap-10 pr-10">
-        <ChromePicker color={color} onChange={(e: ColorResult) => setColor(e.hex)} />
-        <button type="button" className="p-2 rounded-md border border-black" onClick={() => handleChangeColor}>
-          Clear canvas
+        <ChromePicker color={color} onChange={(newColor: ColorResult) => setColor(newColor.hex)} />
+        <button type="button" className="p-2 rounded-md border border-black" onClick={() => handleClearCanvas}>
+          test canvas
         </button>
       </div>
       <canvas
