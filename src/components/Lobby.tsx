@@ -51,7 +51,7 @@ function Lobby() {
       setSettings(values);
       console.log(gameCode);
       console.log(values);
-      socket.emit('game_settings', { room: gameCode, settings: values }); // tell server game settings
+      socket.emit('game_settings', gameCode, values); // tell server game settings
     },
   });
 
