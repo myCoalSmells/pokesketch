@@ -9,7 +9,7 @@ import { BiUndo } from 'react-icons/bi';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 function Game() {
-  const canvasRef = useRef<CanvasDraw>(null);
+  const canvasRef = useRef<any>(null);
   const [color, setColor] = useState('#000');
 
   const handleColorChange = (newColor: ColorResult) => {

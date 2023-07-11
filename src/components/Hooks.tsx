@@ -59,7 +59,7 @@ function useOnDraw(onDraw: Function) {
     };
   }, [onDraw]);
 
-  function setCanvasRef(ref) {
+  function setCanvasRef(ref: any) {
     canvasRef.current = ref;
   }
 

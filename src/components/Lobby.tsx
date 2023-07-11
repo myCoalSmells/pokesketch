@@ -1,6 +1,3 @@
-
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -29,7 +26,6 @@ interface Settings { // settings
 
 function Lobby() {
   const params = useParams();
-  const navigate = useNavigate();
 
   const gameCode = params.gameCode as string;
   const [players, setPlayers] = useState<Player[]>([]);
@@ -63,10 +59,6 @@ function Lobby() {
   const startGame = useCallback(() => { // emit game start to server
     socket.emit('start_game', gameCode);
   }, [gameCode]);
-
-  const startGame = () => {
-    navigate(`/game/${gameCode}`);
-  };
 
   useEffect(() => { // get all the players
     socket.on('players_in_room', (playersInRoom: Player[]) => {
