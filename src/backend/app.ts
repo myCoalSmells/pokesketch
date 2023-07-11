@@ -20,10 +20,27 @@ interface UserData {
   socketId: string
 }
 
+interface GameSettings {
+  time: number;
+  rounds: number;
+  generations: { Kanto: boolean,
+    Johto: boolean,
+    Hoenn: boolean,
+    Sinnoh: boolean,
+    Unova: boolean,
+    Kalos: boolean,
+    Alola: boolean,
+    Galar: boolean,
+    Hisui: boolean };
+}
+
 // Map to store all player data currently playing
 // Game Room => [{username, user's socketID}]
 const allPlayers = new Map<string, UserData[]>();
 const socketIdToGameCode = new Map<string, string>();
+
+// Game Room => { time, rounds, generations }
+const gameSettings = new Map<string, GameSettings>();
 
 io.on('connection', (socket: any) => {
   console.log(`${socket.id} connected`);
@@ -40,6 +57,16 @@ io.on('connection', (socket: any) => {
     io.to(gameCode).emit('players_in_room', players); // send users in room to all clients in room
   });
 
+  socket.on('game_settings', (gameCode: string, settings: GameSettings) => { // update game settings
+    gameSettings.set(gameCode, settings); // set rules for game room
+    console.log(`Settings for game ${gameCode} updated:`, settings);
+  });
+
+  socket.on('start_game', (gameCode: string) => { // receive start game
+    console.log(`game started in room ${gameCode}`);
+    io.to(gameCode).emit('game_started', gameCode);
+  });
+
   socket.on('disconnect', () => {
     console.log(`user disconnected: ${socket.id}`);
     const gameCode = socketIdToGameCode.get(socket.id);
@@ -51,6 +78,9 @@ io.on('connection', (socket: any) => {
         newPlayers.splice(index, 1);
         allPlayers.set(gameCode, newPlayers);
         io.to(gameCode).emit('players_in_room', newPlayers);
+      } else { // if no more players in lobby delete gaming setings
+        gameSettings.delete(gameCode);
+        console.log(`Game settings for room ${gameCode} deleted`);
       }
     }
   });
