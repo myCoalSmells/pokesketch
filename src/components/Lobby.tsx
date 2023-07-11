@@ -1,3 +1,6 @@
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -26,6 +29,8 @@ interface Settings { // settings
 
 function Lobby() {
   const params = useParams();
+  const navigate = useNavigate();
+
   const gameCode = params.gameCode as string;
   const [players, setPlayers] = useState<Player[]>([]);
   const nav = useNavigate();
@@ -59,6 +64,10 @@ function Lobby() {
     socket.emit('start_game', gameCode);
   }, [gameCode]);
 
+  const startGame = () => {
+    navigate(`/game/${gameCode}`);
+  };
+
   useEffect(() => { // get all the players
     socket.on('players_in_room', (playersInRoom: Player[]) => {
       setPlayers(playersInRoom);
@@ -86,6 +95,13 @@ function Lobby() {
           <li key={index}>{player.username}</li>
         ))}
       </ul>
+      <button
+        type="submit"
+        onClick={startGame}
+        disabled={players.length < 1} // change to < 2, but currently at 1 for testing purposes.
+      >
+        Start Game!
+      </button>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="time">
           Time per round:
